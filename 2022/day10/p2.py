@@ -5,7 +5,6 @@
 #
 
 import numpy as np
-import matplotlib.pyplot as plt
 
 filename = f"../inputs/day10-input.txt"
 #filename = f"../inputs/day10-test-input.txt"
@@ -21,19 +20,24 @@ i = 0
 cycles = 239
 printline = ""
 stop_cycles = [1, 41, 81, 121, 161, 201]
-total = 0
 crt_val = 0
+black_square = f"\U0000FFED"
 
 for c in range(cycles+1):
+    crt_val = (c) % 40
     print(f"starting cycle {c+1}")
     print(f"EAX = {eax}")
-
+    print(f"CRT = {crt_val}")
 
     if c+1 in stop_cycles:
         print("at stop cycle")
-        total += eax * (c+1)
         printline = printline + "\n"
-        #input()
+
+    if crt_val >= (eax-1) and  crt_val <= (eax + 1):
+        printline = printline + black_square
+        #printline = printline + "#"
+    else:
+        printline = printline + " "
 
     # check if pending instruction to compute
     if buffer[0] == 0:
@@ -53,14 +57,11 @@ for c in range(cycles+1):
 
     if buffer[0] == 0:
         eax += buffer[1]
-    printline = printline + "#"
-
 
     print(f"end cycle {c+1}")
     print(f"EAX = {eax}")
     print("\n\n")
 
 
-print(i)
 print(printline)
 
